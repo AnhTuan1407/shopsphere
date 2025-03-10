@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Entity
 @Data
 @Builder
@@ -18,10 +20,15 @@ public class Product {
     String name;
     String description;
     String imageUrl;
-    double price;
-    int stock;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<ProductVariant> productVariants;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", nullable = false)
+    private Supplier supplier;
 }

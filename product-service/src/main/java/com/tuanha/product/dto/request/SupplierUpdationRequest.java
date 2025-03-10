@@ -3,13 +3,16 @@ package com.tuanha.product.dto.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryUpdationRequest {
+public class SupplierUpdationRequest {
     String name;
-    String description;
-    String image_url;
+    String address;
+    String contactEmail;
+    String phoneNumber;
 }

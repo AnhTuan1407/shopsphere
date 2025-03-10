@@ -1,22 +1,24 @@
 package com.tuanha.product.dto.response;
 
 import com.tuanha.product.entity.Product;
-import com.tuanha.product.enums.StatusCategory;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryResponse {
+public class SupplierResponse {
     Long id;
     String name;
-    String description;
-    String image_url;
-    StatusCategory status;
-    List<ProductResponse> products;
+    int follower;
+    LocalDate createdAt;
+    int rating;
+    private List<ProductResponse> products;
 }

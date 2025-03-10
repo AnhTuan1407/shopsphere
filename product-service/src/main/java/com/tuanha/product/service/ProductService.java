@@ -6,15 +6,18 @@ import com.tuanha.product.dto.response.CategoryResponse;
 import com.tuanha.product.dto.response.ProductResponse;
 import com.tuanha.product.entity.Category;
 import com.tuanha.product.entity.Product;
+import com.tuanha.product.entity.Supplier;
 import com.tuanha.product.exception.AppException;
 import com.tuanha.product.exception.ErrorCode;
 import com.tuanha.product.mapper.ProductMapper;
 import com.tuanha.product.repository.CategoryRepository;
 import com.tuanha.product.repository.ProductRepository;
+import com.tuanha.product.repository.SupplierRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -27,11 +30,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-@RequestMapping("/")
 public class ProductService {
     ProductRepository productRepository;
 
     CategoryRepository categoryRepository;
+
+    SupplierRepository supplierRepository;
 
     ProductMapper productMapper;
 
@@ -44,8 +48,12 @@ public class ProductService {
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
         product.setCategory(category);
 
+        Supplier supplier = supplierRepository.findById(request.getSupplierId()).orElseThrow(() -> new AppException(ErrorCode.SUPPLIER_NOT_EXISTS));
+        product.setSupplier(supplier);
+
         return productMapper.toProductResponse(productRepository.save(product));
     }
+
 
     public List<ProductResponse> getAllProducts() {
 
@@ -82,8 +90,11 @@ public class ProductService {
 
     @PreAuthorize("hasRole('ADMIN')")
     public String deleteProduct(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
-        productRepository.deleteById(id);
+        productRepository.findById(id).ifPresentOrElse(
+                productRepository::delete, () -> {
+                    throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+                }
+        );
         return "Product has been deleted";
     }
 

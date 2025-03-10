@@ -1,8 +1,7 @@
-package com.tuanha.product.dto.request;
+package com.tuanha.product.dto.response.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductUpdationRequest {
+public class ProductCreationRequest {
     @NotBlank(message = "PRODUCT_NAME_NOT_BLANK")
     String name;
 
@@ -23,4 +22,6 @@ public class ProductUpdationRequest {
 
     @NotNull(message = "CATEGORY_ID_NOT_BLANK")
     Long categoryId;
+
+    Long supplierId;
 }

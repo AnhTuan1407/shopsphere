@@ -5,11 +5,12 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryUpdationRequest {
+public class SupplierCreationRequest {
     String name;
-    String description;
-    String image_url;
+    String address;
+    String contactEmail;
+    String phoneNumber;
 }

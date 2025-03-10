@@ -21,14 +21,8 @@ public class ProductCreationRequest {
     @NotBlank(message = "PRODUCT_IMAGE_NOT_BLANK")
     String imageUrl;
 
-    @NotNull(message = "PRICE_NOT_BLANK")
-    @Positive(message = "PRICE_POSITIVE")
-    double price;
-
-    @NotNull(message = "STOCK_NOT_BLANK")
-    @Positive(message = "STOCK_POSITIVE")
-    int stock;
-
     @NotNull(message = "CATEGORY_ID_NOT_BLANK")
     Long categoryId;
+
+    Long supplierId;
 }

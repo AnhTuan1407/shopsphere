@@ -11,4 +11,5 @@ import lombok.experimental.FieldDefaults;
 public class CategoryCreationRequest {
     String name;
     String description;
+    String image_url;
 }

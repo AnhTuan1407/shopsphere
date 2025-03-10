@@ -22,6 +22,7 @@ public class CategoryController {
 
     @PostMapping
     ApiResponse<CategoryResponse> createCategory(@RequestBody CategoryCreationRequest request) {
+        log.info("Request: {}", request);
         var category = categoryService.createCategory(request);
         return ApiResponse.<CategoryResponse>builder()
                 .result(category)
@@ -30,8 +31,15 @@ public class CategoryController {
 
     @GetMapping
     ApiResponse<List<CategoryResponse>> getAllCategories() {
-        return  ApiResponse.<List<CategoryResponse>>builder()
+        return ApiResponse.<List<CategoryResponse>>builder()
                 .result(categoryService.getAllCategories())
+                .build();
+    }
+
+    @GetMapping("/{id}")
+    ApiResponse<CategoryResponse> getCategory(@PathVariable("id") Long id) {
+        return ApiResponse.<CategoryResponse>builder()
+                .result(categoryService.getCategoryById(id))
                 .build();
     }
 }

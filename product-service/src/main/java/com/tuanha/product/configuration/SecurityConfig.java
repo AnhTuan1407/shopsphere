@@ -17,7 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private String[] PUBLIC_ENDPOINTS = {
             "/",
-            "/search"
+            "/search",
+            "/categories",
+            "/variants",
+            "/suppliers",
     };
 
     private final CustomJwtDecoder customJwtDecoder;

@@ -1,6 +1,6 @@
-package com.tuanha.product.dto.response;
+package com.tuanha.product.dto.response.response;
 
-import com.tuanha.product.entity.Category;
+import com.tuanha.product.enums.StatusCategory;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,11 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductResponse {
+public class CategoryResponse {
     Long id;
     String name;
     String description;
-    String imageUrl;
-    CategoryResponseForProduct category;
-    List<ProductVariantResponse> variants;
+    String image_url;
+    StatusCategory status;
+    List<ProductResponse> products;
 }

@@ -1,4 +1,4 @@
-package com.tuanha.product.dto.request;
+package com.tuanha.product.dto.response.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,8 +8,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryUpdationRequest {
+public class CategoryResponseForProduct {
+    Long id;
     String name;
     String description;
-    String image_url;
 }

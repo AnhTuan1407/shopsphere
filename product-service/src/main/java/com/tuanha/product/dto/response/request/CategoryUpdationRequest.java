@@ -1,4 +1,4 @@
-package com.tuanha.product.dto.request;
+package com.tuanha.product.dto.response.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

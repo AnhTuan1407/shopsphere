@@ -1,6 +1,5 @@
-package com.tuanha.product.dto.response;
+package com.tuanha.product.dto.response.response;
 
-import com.tuanha.product.entity.Category;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
