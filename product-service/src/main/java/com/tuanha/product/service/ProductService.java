@@ -2,7 +2,6 @@ package com.tuanha.product.service;
 
 import com.tuanha.product.dto.request.ProductCreationRequest;
 import com.tuanha.product.dto.request.ProductUpdationRequest;
-import com.tuanha.product.dto.response.CategoryResponse;
 import com.tuanha.product.dto.response.ProductResponse;
 import com.tuanha.product.entity.Category;
 import com.tuanha.product.entity.Product;
@@ -17,12 +16,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -68,18 +65,6 @@ public class ProductService {
         return productResponses;
     }
 
-    public ProductResponse findProductByName(String name) {
-
-        Product product = productRepository.findByName(name);
-
-        if (ObjectUtils.isEmpty(product))
-            throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
-
-        ProductResponse productResponse = productMapper.toProductResponse(product);
-
-        return productResponse;
-    }
-
     @PreAuthorize("hasRole('ADMIN')")
     public ProductResponse updateProduct(ProductUpdationRequest request, Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_FOUND));
@@ -108,6 +93,22 @@ public class ProductService {
     public List<ProductResponse> getAllProductContainingName(String name) {
 
         List<ProductResponse> productResponses = productRepository.findByNameContainingIgnoreCase(name).stream()
+                .map(productMapper::toProductResponse)
+                .toList();
+
+        return productResponses;
+    }
+
+    public List<ProductResponse> getAllProductBySupplierId(Long id) {
+        List<ProductResponse> productResponses = productRepository.findBySupplierId(id).stream()
+                .map(productMapper::toProductResponse)
+                .toList();
+
+        return productResponses;
+    }
+
+    public List<ProductResponse> getAllProductByCategoryId(Long id) {
+        List<ProductResponse> productResponses = productRepository.findByCategoryId(id).stream()
                 .map(productMapper::toProductResponse)
                 .toList();
 

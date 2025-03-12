@@ -1,4 +1,4 @@
-package com.tuanha.product.dto.response.response;
+package com.tuanha.product.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -6,18 +6,15 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class ProductVariantResponse {
-    Long id;
+public class ProductPurchaseResponse {
+    Long productVariantId;
+    String name;
     String color;
     String size;
-    String imageUrl;
+    int quantity;
     double price;
-    int stock;
-    int rating;
-    long quantitySold;
-    Long productId;
 }

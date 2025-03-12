@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-@RequestMapping("/")
+@RequestMapping("/products")
 public class ProductController {
     ProductService productService;
 
@@ -50,13 +50,6 @@ public class ProductController {
                 .build();
     }
 
-    @GetMapping("getByName/{name}")
-    ApiResponse<ProductResponse> getProductByName(@PathVariable("name") String name) {
-        return ApiResponse.<ProductResponse>builder()
-                .result(productService.findProductByName(name))
-                .build();
-    }
-
     @GetMapping("/{id}")
     ApiResponse<ProductResponse> getProductById(@PathVariable("id") Long id) {
         return ApiResponse.<ProductResponse>builder()
@@ -68,6 +61,20 @@ public class ProductController {
     ApiResponse<List<ProductResponse>> getProductById(@RequestParam("name") String name) {
         return ApiResponse.<List<ProductResponse>>builder()
                 .result(productService.getAllProductContainingName(name))
+                .build();
+    }
+
+    @GetMapping("by-supplier")
+    ApiResponse<List<ProductResponse>> getAllProductBySupplierId(@RequestParam("id") Long supplierId) {
+        return ApiResponse.<List<ProductResponse>>builder()
+                .result(productService.getAllProductBySupplierId(supplierId))
+                .build();
+    }
+
+    @GetMapping("by-category")
+    ApiResponse<List<ProductResponse>> getAllProductByCategoryId(@RequestParam("id") Long categoryId) {
+        return ApiResponse.<List<ProductResponse>>builder()
+                .result(productService.getAllProductByCategoryId(categoryId))
                 .build();
     }
 }

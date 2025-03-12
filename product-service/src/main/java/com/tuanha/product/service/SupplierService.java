@@ -48,11 +48,8 @@ public class SupplierService {
         return supplierMapper.toSupplierResponse(supplierRepository.save(supplier));
     }
 
-    public SupplierResponse getSupplierByName(String name) {
-        var supplier = supplierRepository.findByName(name);
-        if (ObjectUtils.isEmpty(supplier)) {
-            throw new AppException(ErrorCode.SUPPLIER_NOT_EXISTS);
-        }
+    public SupplierResponse getSupplierById(Long id) {
+        var supplier = supplierRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.SUPPLIER_NOT_EXISTS));
 
         return supplierMapper.toSupplierResponse(supplier);
     }

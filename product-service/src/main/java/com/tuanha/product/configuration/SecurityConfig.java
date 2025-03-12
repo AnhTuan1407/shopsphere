@@ -15,15 +15,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private String[] PUBLIC_ENDPOINTS = {
-            "/",
-            "/search",
-            "/categories",
-            "/variants",
-            "/suppliers",
-    };
-
     private final CustomJwtDecoder customJwtDecoder;
+    private String[] PUBLIC_ENDPOINTS = {
+            "/products/**",
+            "/product-variants/**",
+            "/categories/**",
+            "/suppliers/{id}",
+    };
 
     public SecurityConfig(CustomJwtDecoder customJwtDecoder) {
         this.customJwtDecoder = customJwtDecoder;
@@ -40,10 +38,10 @@ public class SecurityConfig {
         );
 
         httpSecurity.oauth2ResourceServer(oauth2 ->
-                    oauth2.jwt(jwtConfigurer ->
-                            jwtConfigurer.decoder(customJwtDecoder)
-                                    .jwtAuthenticationConverter(jwtAuthenticationConverter())
-                            ).authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                oauth2.jwt(jwtConfigurer ->
+                        jwtConfigurer.decoder(customJwtDecoder)
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                ).authenticationEntryPoint(new JwtAuthenticationEntryPoint())
         );
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable);

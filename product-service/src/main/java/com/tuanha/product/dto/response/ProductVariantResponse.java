@@ -16,7 +16,7 @@ public class ProductVariantResponse {
     String size;
     String imageUrl;
     double price;
-    int stock;
+    int availableQuantity;
     int rating;
     long quantitySold;
     Long productId;

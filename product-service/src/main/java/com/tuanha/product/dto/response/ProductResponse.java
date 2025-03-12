@@ -1,6 +1,5 @@
 package com.tuanha.product.dto.response;
 
-import com.tuanha.product.entity.Category;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -16,6 +15,7 @@ public class ProductResponse {
     String name;
     String description;
     String imageUrl;
-    CategoryResponseForProduct category;
+    CategoryResponse category;
     List<ProductVariantResponse> variants;
+    SupplierResponse supplier;
 }

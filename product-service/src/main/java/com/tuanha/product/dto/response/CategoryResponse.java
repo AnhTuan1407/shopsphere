@@ -1,6 +1,5 @@
 package com.tuanha.product.dto.response;
 
-import com.tuanha.product.entity.Product;
 import com.tuanha.product.enums.StatusCategory;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,5 +17,4 @@ public class CategoryResponse {
     String description;
     String image_url;
     StatusCategory status;
-    List<ProductResponse> products;
 }

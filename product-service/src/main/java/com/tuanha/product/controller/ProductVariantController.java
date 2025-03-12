@@ -1,8 +1,11 @@
 package com.tuanha.product.controller;
 
+import com.google.protobuf.Api;
+import com.tuanha.product.dto.request.ProductPurchaseRequest;
 import com.tuanha.product.dto.request.ProductVariantCreationRequest;
 import com.tuanha.product.dto.request.ProductVariantUpdationRequest;
 import com.tuanha.product.dto.response.ApiResponse;
+import com.tuanha.product.dto.response.ProductPurchaseResponse;
 import com.tuanha.product.dto.response.ProductVariantResponse;
 import com.tuanha.product.service.ProductVariantService;
 import lombok.AccessLevel;
@@ -17,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-@RequestMapping("/variants")
+@RequestMapping("/product-variants")
 public class ProductVariantController {
     ProductVariantService productVariantService;
 
@@ -53,6 +56,13 @@ public class ProductVariantController {
     ApiResponse<ProductVariantResponse> getProductVariantById(@PathVariable("id") Long id) {
         return ApiResponse.<ProductVariantResponse>builder()
                 .result(productVariantService.findProductVariantById(id))
+                .build();
+    }
+
+    @PostMapping("/purchase")
+    ApiResponse<List<ProductPurchaseResponse>> purchaseProducts(@RequestBody List<ProductPurchaseRequest> request) {
+        return ApiResponse.<List<ProductPurchaseResponse>>builder()
+                .result(productVariantService.purchaseProducts(request))
                 .build();
     }
 }

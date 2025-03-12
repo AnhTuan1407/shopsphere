@@ -3,7 +3,6 @@ package com.tuanha.product.controller;
 import com.tuanha.product.dto.request.SupplierCreationRequest;
 import com.tuanha.product.dto.request.SupplierUpdationRequest;
 import com.tuanha.product.dto.response.ApiResponse;
-import com.tuanha.product.dto.response.ProductResponse;
 import com.tuanha.product.dto.response.SupplierResponse;
 import com.tuanha.product.service.SupplierService;
 import lombok.AccessLevel;
@@ -22,7 +21,7 @@ import java.util.List;
 public class SupplierController {
     SupplierService supplierService;
 
-    @GetMapping("")
+    @GetMapping
     ApiResponse<List<SupplierResponse>> getAllSuppliers() {
         return ApiResponse.<List<SupplierResponse>>builder()
                 .result(supplierService.getAllSuppliers())
@@ -51,10 +50,10 @@ public class SupplierController {
                 .build();
     }
 
-//    @GetMapping("/{name}")
-//    ApiResponse<SupplierResponse> getSupplierByName(@PathVariable("name") String name) {
-//        return ApiResponse.<SupplierResponse>builder()
-//                .result(supplierService.getSupplierByName(name))
-//                .build();
-//    }
+    @GetMapping("/{id}")
+    ApiResponse<SupplierResponse> getSupplierById(@PathVariable("id") Long id) {
+        return ApiResponse.<SupplierResponse>builder()
+                .result(supplierService.getSupplierById(id))
+                .build();
+    }
 }

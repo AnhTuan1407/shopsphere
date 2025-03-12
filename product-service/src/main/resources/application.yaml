@@ -1,7 +1,7 @@
 server:
   port: 8082
   servlet:
-    context-path: /products
+    context-path:
 
 spring:
   datasource:
