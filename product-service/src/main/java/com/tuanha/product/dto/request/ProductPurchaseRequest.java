@@ -12,5 +12,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductPurchaseRequest {
     Long productVariantId;
+    double pricePerUnit;
     int quantity;
 }

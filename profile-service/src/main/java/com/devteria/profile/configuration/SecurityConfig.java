@@ -18,8 +18,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
     // Khai báo danh sách endpoint public
-    private static final String[] PUBLIC_ENDPOINTS = {
+    private static final String[] PUBLIC_POST_ENDPOINTS = {
             "/internal/users"
+    };
+
+    private static final String[] PUBLIC_GET_ENDPOINTS = {
+            "/users/{id}"
     };
 
     // Inject CustomJwtDecoder
@@ -35,8 +39,9 @@ public class SecurityConfig {
         //Cấu hình quyền truy cập API
         //Cho phép các API trong PUBLIC_ENDPOINTS không cần xác thực.
         httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS)
+                request.requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS)
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
                         .anyRequest()
                         .authenticated()
         );
