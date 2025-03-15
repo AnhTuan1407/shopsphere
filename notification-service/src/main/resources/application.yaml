@@ -1,0 +1,43 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /notifications
+
+spring:
+  application:
+    name: notification-service
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/shopsphere
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+        spring.json.type.mapping: orderConfirmation:com.tuanha.notification.kafka.order.OrderConfirmation,paymentConfirmation:com.tuanha.notification.kafka.payment.PaymentConfirmation
+
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+  mail:
+    host: localhost
+    port: 1025
+    username: tuanha
+    password: tuanha
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: false
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000

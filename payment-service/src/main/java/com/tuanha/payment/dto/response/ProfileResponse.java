@@ -1,20 +1,16 @@
-package com.devteria.profile.dto.request;
+package com.tuanha.payment.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
-
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserProfileCreationRequest {
-    String userId;
+public class ProfileResponse {
+    String id;
     String firstName;
     String lastName;
     String email;
-    LocalDate dob;
-    String city;
 }

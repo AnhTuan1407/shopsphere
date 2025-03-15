@@ -26,9 +26,11 @@ public class PaymentService {
         this.notificationProducer.sendNotification(
                 new PaymentNotificationRequest(
                         request.getAmount(),
+                        request.getOrderId(),
                         request.getPaymentMethod(),
                         request.getProfile().getFirstName(),
-                        request.getProfile().getFirstName()
+                        request.getProfile().getLastName(),
+                        request.getProfile().getEmail()
                 )
         );
         return payment.getId();

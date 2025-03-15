@@ -13,7 +13,9 @@ import java.math.BigDecimal;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentNotificationRequest {
     double amount;
+    Long orderId;
     PaymentMethod paymentMethod;
     String firstName;
     String lastName;
+    String email;
 }

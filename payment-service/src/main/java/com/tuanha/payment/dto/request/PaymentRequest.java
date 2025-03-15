@@ -1,5 +1,6 @@
 package com.tuanha.payment.dto.request;
 
+import com.tuanha.payment.dto.response.ProfileResponse;
 import com.tuanha.payment.enums.PaymentMethod;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,5 +16,5 @@ public class PaymentRequest {
     double amount;
     PaymentMethod paymentMethod;
     Long orderId;
-    ProfileRequest profile;
+    ProfileResponse profile;
 }

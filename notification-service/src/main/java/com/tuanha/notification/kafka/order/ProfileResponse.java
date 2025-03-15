@@ -1,4 +1,4 @@
-package com.devteria.profile.dto.request;
+package com.tuanha.notification.kafka.order;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -7,10 +7,11 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserProfileCreationRequest {
+public class ProfileResponse {
+    String id;
     String userId;
     String firstName;
     String lastName;
