@@ -1,7 +1,6 @@
 package com.tuanha.product.configuration;
 
 import com.nimbusds.jwt.SignedJWT;
-import com.tuanha.product.dto.response.ApiResponse;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
@@ -24,7 +23,7 @@ public class CustomJwtDecoder implements JwtDecoder {
                     signedJWT.getJWTClaimsSet().getExpirationTime().toInstant(),
                     signedJWT.getHeader().toJSONObject(),
                     signedJWT.getJWTClaimsSet().getClaims()
-                );
+            );
 
         } catch (ParseException e) {
             throw new RuntimeException(e);

@@ -22,7 +22,7 @@ public class ProductVariant {
     String size;
     String imageUrl;
     double price;
-    int stock;
+    int availableQuantity;
 
     @Builder.Default
     int rating = 0;

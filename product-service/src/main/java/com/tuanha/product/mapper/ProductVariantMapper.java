@@ -2,9 +2,11 @@ package com.tuanha.product.mapper;
 
 import com.tuanha.product.dto.request.ProductVariantCreationRequest;
 import com.tuanha.product.dto.request.ProductVariantUpdationRequest;
+import com.tuanha.product.dto.response.ProductPurchaseResponse;
 import com.tuanha.product.dto.response.ProductVariantResponse;
 import com.tuanha.product.entity.ProductVariant;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
@@ -14,4 +16,6 @@ public interface ProductVariantMapper {
     ProductVariantResponse toProductVariantResponse(ProductVariant productVariant);
 
     void toUpdateProductVariant(@MappingTarget ProductVariant productVariant, ProductVariantUpdationRequest request);
+
+    ProductPurchaseResponse toProductPurchaseResponse(ProductVariant productVariant);
 }

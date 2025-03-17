@@ -13,6 +13,7 @@ public interface ProductMapper {
     Product toProduct(ProductCreationRequest request);
 
     @Mapping(target = "variants", source = "productVariants")
+    @Mapping(target = "supplier", source = "supplier")
     ProductResponse toProductResponse(Product product);
 
     void toUpdateProduct(@MappingTarget Product product, ProductUpdationRequest request);

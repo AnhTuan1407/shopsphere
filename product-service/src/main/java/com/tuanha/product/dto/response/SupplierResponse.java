@@ -1,8 +1,5 @@
 package com.tuanha.product.dto.response;
 
-import com.tuanha.product.entity.Product;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -19,6 +16,8 @@ public class SupplierResponse {
     String name;
     int follower;
     LocalDate createdAt;
+    String address;
+    String contactEmail;
+    String phoneNumber;
     int rating;
-    private List<ProductResponse> products;
 }

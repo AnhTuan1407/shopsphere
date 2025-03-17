@@ -23,6 +23,7 @@ public enum ErrorCode {
     SUPPLIER_EXISTS(1016, "Supplier existed.", HttpStatus.BAD_REQUEST),
     SUPPLIER_NOT_EXISTS(1017, "Supplier not found.", HttpStatus.NOT_FOUND),
     PRODUCT_VARIANT_NOT_FOUND(1018, "Product variant not found.", HttpStatus.NOT_FOUND),
+    INSUFFICIENT_STOCK(1019, "Insufficient stock quantity.", HttpStatus.BAD_REQUEST),
     ;
 
     private int code;

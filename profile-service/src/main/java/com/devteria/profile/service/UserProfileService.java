@@ -44,7 +44,7 @@ public class UserProfileService {
     }
 
     public UserProfileResponse getUserProfile(String profileId) {
-        return userProfileMapper.toUserProfileResponse(userProfileRepository.findById(profileId).orElseThrow(() -> new AppException(ErrorCode.UNCATEGORIZED_EXCEPTION)));
+        return userProfileMapper.toUserProfileResponse(userProfileRepository.findByCustomId(profileId));
     }
 
     public void delete(String profileId) {
