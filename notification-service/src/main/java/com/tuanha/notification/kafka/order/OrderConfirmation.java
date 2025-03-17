@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,6 +17,6 @@ public class OrderConfirmation {
     double totalPrice;
     PaymentMethod paymentMethod;
     ProfileResponse profile;
-//    List<ProductPurchaseResponse> products;
+    ArrayList<ProductPurchaseResponse> products;
     Long orderId;
 }

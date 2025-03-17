@@ -81,7 +81,7 @@ public class NotificationsConsumer {
                     orderConfirmation.getProfile().getEmail(),
                     customerName,
                     orderConfirmation.getTotalPrice(),
-//                    orderConfirmation.getProducts(),
+                    orderConfirmation.getProducts(),
                     orderConfirmation.getOrderId()
             );
         } catch (Exception e) {

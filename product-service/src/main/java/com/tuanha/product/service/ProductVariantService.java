@@ -87,7 +87,6 @@ public class ProductVariantService {
     }
 
     @Transactional(rollbackFor = AppException.class)
-    @PreAuthorize("hasRole('USER')")
     public List<ProductPurchaseResponse> purchaseProducts(List<ProductPurchaseRequest> request) {
         var productIds = request
                 .stream()

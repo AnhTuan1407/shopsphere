@@ -15,6 +15,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,11 +70,12 @@ public class EmailService {
     }
 
     @Async
-    public void sendOrderConfirmationEmail(String destinationEmail, String customerName, double amount, Long orderId) {
+    public void sendOrderConfirmationEmail(String destinationEmail, String customerName,
+                                           double amount, ArrayList<ProductPurchaseResponse> products, Long orderId) {
         Map<String, Object> variables = new HashMap<>();
         variables.put("customerName", customerName);
         variables.put("totalAmount", amount);
-//        variables.put("products", products);
+        variables.put("products", products);
         variables.put("orderId", orderId);
 
         sendEmail(destinationEmail, ORDER_CONFIRMATION.getSubject(), ORDER_CONFIRMATION.getTemplate(), variables);
