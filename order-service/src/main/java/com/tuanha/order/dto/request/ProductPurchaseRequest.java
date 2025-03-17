@@ -1,0 +1,15 @@
+package com.tuanha.order.dto.request;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class ProductPurchaseRequest {
+    Long productVariantId;
+    int quantity;
+    double pricePerUnit;
+}
