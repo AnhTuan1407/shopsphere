@@ -8,6 +8,8 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
+    EXISTS_EMAIL(1008, "Email already exists", HttpStatus.FORBIDDEN),
+    EXISTS_PHONE_NUMBER(1009, "Phone number already exists", HttpStatus.FORBIDDEN),
     ;
     private final int code;
     private final String message;
