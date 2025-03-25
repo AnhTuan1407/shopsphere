@@ -28,6 +28,5 @@ public class UserProfile {
     String firstName;
     String lastName;
     String email;
-    LocalDate dob;
-    String city;
+    String phoneNumber;
 }

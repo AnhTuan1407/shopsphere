@@ -6,6 +6,9 @@ import java.util.List;
 import com.devteria.identity.dto.request.UserProfileCreationRequest;
 import com.devteria.identity.mapper.ProfileMapper;
 import com.devteria.identity.repository.httpClient.ProfileClient;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,14 +44,15 @@ public class UserService {
     ProfileClient profileClient;
 
     public UserResponse createUser(UserCreationRequest request) {
-        if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXISTED);
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new AppException(ErrorCode.USER_EXISTED);
+        }
 
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         HashSet<Role> roles = new HashSet<>();
         roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
-
         user.setRoles(roles);
 
         user = userRepository.save(user);
@@ -56,10 +60,16 @@ public class UserService {
         var profileCreationRequest = profileMapper.toUserProfileCreationRequest(request);
         profileCreationRequest.setUserId(user.getId());
 
-        profileClient.createProfile(profileCreationRequest);
+        try {
+            profileClient.createProfile(profileCreationRequest);
+        } catch (FeignException exception) {
+            userRepository.delete(user); // Rollback user nếu tạo profile thất bại
+            throw exception;
+        }
 
         return userMapper.toUserResponse(user);
     }
+
 
     public UserResponse getMyInfo() {
         var context = SecurityContextHolder.getContext();

@@ -19,13 +19,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-
     String username;
     String password;
     String firstName;
-    LocalDate dob;
     String lastName;
     String email;
+    String phoneNumber;
 
     @ManyToMany
     Set<Role> roles;

@@ -27,6 +27,11 @@ public class UserProfileService {
     UserProfileMapper userProfileMapper;
 
     public UserProfileResponse createProfile(UserProfileCreationRequest request) {
+        if (userProfileRepository.existsByEmail(request.getEmail()))
+            throw new AppException(ErrorCode.EXISTS_EMAIL);
+        if (userProfileRepository.existsByPhoneNumber(request.getPhoneNumber()))
+            throw new AppException(ErrorCode.EXISTS_PHONE_NUMBER);
+
         UserProfile userProfile = userProfileMapper.toUserProfile(request);
         userProfile = userProfileRepository.save(userProfile);
         return userProfileMapper.toUserProfileResponse(userProfile);

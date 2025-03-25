@@ -10,4 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface UserProfileRepository extends Neo4jRepository<UserProfile, String> {
     @Query("MATCH (u:user_profile) WHERE u.id = $id RETURN u")
     UserProfile findByCustomId(@Param("id") String id);
+
+    boolean existsByEmail(String email);
+    boolean existsByPhoneNumber(String phoneNumber);
 }

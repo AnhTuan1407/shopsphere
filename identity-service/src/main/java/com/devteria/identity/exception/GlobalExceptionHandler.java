@@ -3,6 +3,9 @@ package com.devteria.identity.exception;
 import java.util.Map;
 import java.util.Objects;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
 import jakarta.validation.ConstraintViolation;
 
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,31 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(apiResponse);
     }
+
+    @ExceptionHandler(value = FeignException.class)
+    public ResponseEntity<ApiResponse> handlingFeignException(FeignException exception) {
+        int statusCode = exception.status();
+
+        String responseBody = exception.contentUTF8();
+        String errorMessage = "Service unavailable";
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(responseBody);
+            if (jsonNode.has("message")) {
+                errorMessage = jsonNode.get("message").asText();
+            }
+        } catch (Exception e) {
+            log.error("Error parsing Feign response: {}", e.getMessage());
+        }
+
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(statusCode);
+        apiResponse.setMessage(errorMessage);
+
+        return ResponseEntity.status(statusCode).body(apiResponse);
+    }
+
 
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
