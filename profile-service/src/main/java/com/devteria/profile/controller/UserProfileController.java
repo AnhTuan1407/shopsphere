@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/users")
+@RequestMapping("")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class UserProfileController {
@@ -47,6 +47,13 @@ public class UserProfileController {
         userProfileService.delete(profileId);
         return ApiResponse.<String>builder()
                 .result("User profile has been deleted!")
+                .build();
+    }
+
+    @GetMapping("/user/{userId}")
+    ApiResponse<UserProfileResponse> getProfileByUserId(@PathVariable("userId") String userId) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.getProfileByUserId(userId))
                 .build();
     }
 }
