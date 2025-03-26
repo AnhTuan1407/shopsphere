@@ -68,9 +68,9 @@ public class AuthenticationService {
                 .findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
-        boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
+        boolean isPassword = passwordEncoder.matches(request.getPassword(), user.getPassword());
 
-        if (!authenticated) throw new AppException(ErrorCode.UNAUTHENTICATED);
+        if (!isPassword) throw new AppException(ErrorCode.PASSWORD_WRONG);
 
         var token = generateToken(user);
 
@@ -126,7 +126,7 @@ public class AuthenticationService {
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getUsername())
-                .issuer("devteria.com")
+                .issuer("shopsphere.com")
                 .issueTime(issueTime)
                 .expirationTime(expiryTime)
                 .jwtID(UUID.randomUUID().toString())

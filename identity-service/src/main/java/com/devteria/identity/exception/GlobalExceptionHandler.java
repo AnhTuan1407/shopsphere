@@ -41,19 +41,21 @@ public class GlobalExceptionHandler {
 
         String responseBody = exception.contentUTF8();
         String errorMessage = "Service unavailable";
+        int errorCode = 0;
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(responseBody);
             if (jsonNode.has("message")) {
                 errorMessage = jsonNode.get("message").asText();
+                errorCode = jsonNode.get("code").asInt();
             }
         } catch (Exception e) {
             log.error("Error parsing Feign response: {}", e.getMessage());
         }
 
         ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(statusCode);
+        apiResponse.setCode(errorCode != 0 ? errorCode : statusCode);
         apiResponse.setMessage(errorMessage);
 
         return ResponseEntity.status(statusCode).body(apiResponse);

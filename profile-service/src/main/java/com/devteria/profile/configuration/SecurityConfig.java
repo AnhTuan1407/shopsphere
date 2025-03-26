@@ -19,11 +19,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     // Khai báo danh sách endpoint public
     private static final String[] PUBLIC_POST_ENDPOINTS = {
-            "/internal/users"
+            "/internal"
     };
 
     private static final String[] PUBLIC_GET_ENDPOINTS = {
-            "/users/{id}"
+            "/{id}",
+            "/user/{id}"
     };
 
     // Inject CustomJwtDecoder

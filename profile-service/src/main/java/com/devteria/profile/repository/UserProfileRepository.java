@@ -13,4 +13,6 @@ public interface UserProfileRepository extends Neo4jRepository<UserProfile, Stri
 
     boolean existsByEmail(String email);
     boolean existsByPhoneNumber(String phoneNumber);
+
+    UserProfile findByUserId(String userId);
 }

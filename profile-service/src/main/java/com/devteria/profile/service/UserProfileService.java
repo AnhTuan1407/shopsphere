@@ -52,6 +52,10 @@ public class UserProfileService {
         return userProfileMapper.toUserProfileResponse(userProfileRepository.findByCustomId(profileId));
     }
 
+    public UserProfileResponse getProfileByUserId(String userId) {
+        return userProfileMapper.toUserProfileResponse(userProfileRepository.findByUserId(userId));
+    }
+
     public void delete(String profileId) {
         userProfileRepository.deleteById(profileId);
     }
