@@ -2,6 +2,7 @@ package com.tuanha.order.controller;
 
 import com.tuanha.order.dto.request.CartCreationRequest;
 import com.tuanha.order.dto.request.CartItemCreationRequest;
+import com.tuanha.order.dto.request.CartItemUpdationRequest;
 import com.tuanha.order.dto.response.ApiResponse;
 import com.tuanha.order.dto.response.CartItemResponse;
 import com.tuanha.order.dto.response.CartResponse;
@@ -18,10 +19,10 @@ import org.springframework.web.bind.annotation.*;
 public class CartController {
     CartService cartService;
 
-    @PostMapping("/")
-    ApiResponse<CartResponse> getCart(@RequestBody CartCreationRequest request) {
+    @GetMapping("/{profileId}")
+    ApiResponse<CartResponse> getCart(@PathVariable String profileId) {
         return ApiResponse.<CartResponse>builder()
-                .result(cartService.getCartByProfileId(request.getProfileId()))
+                .result(cartService.getCartByProfileId(profileId))
                 .build();
     }
 
@@ -36,6 +37,20 @@ public class CartController {
     public ApiResponse<CartResponse> selectCartItem(@PathVariable Long cartItemId) {
         return ApiResponse.<CartResponse>builder()
                 .result(cartService.selectCartItem(cartItemId))
+                .build();
+    }
+
+    @PutMapping("/update-quantity/{cartItemId}")
+    public ApiResponse<CartResponse> updateCart(@PathVariable Long cartItemId, @RequestBody CartItemUpdationRequest request) {
+        return ApiResponse.<CartResponse>builder()
+                .result(cartService.updateCartItem(cartItemId, request))
+                .build();
+    }
+
+    @DeleteMapping("/{cartItemId}")
+    public ApiResponse<Boolean> deleteCartItem(@PathVariable Long cartItemId) {
+        return ApiResponse.<Boolean>builder()
+                .result(cartService.deleteCartItem(cartItemId))
                 .build();
     }
 
