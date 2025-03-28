@@ -2,6 +2,7 @@ package com.tuanha.order.service;
 
 import com.tuanha.order.dto.request.CartCreationRequest;
 import com.tuanha.order.dto.request.CartItemCreationRequest;
+import com.tuanha.order.dto.request.CartItemUpdationRequest;
 import com.tuanha.order.dto.response.CartItemResponse;
 import com.tuanha.order.dto.response.CartResponse;
 import com.tuanha.order.entity.Cart;
@@ -10,6 +11,7 @@ import com.tuanha.order.mapper.CartItemMapper;
 import com.tuanha.order.mapper.CartMapper;
 import com.tuanha.order.repository.CartItemRepository;
 import com.tuanha.order.repository.CartRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -81,4 +83,37 @@ public class CartService {
         cartItemRepository.save(cartItem);
         return cartMapper.toCartResponse(cart);
     }
+
+    public CartResponse updateCartItem(Long cartItemId, CartItemUpdationRequest request) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(() -> new RuntimeException("Cart item not found."));
+        Cart cart = cartRepository.findByCartItemId(cartItemId);
+
+        log.info("CartItem: {}", cartItem);
+        cart.setTotalPrice(cart.getTotalPrice() + cartItem.getPrice() * (request.getQuantity() - cartItem.getQuantity()));
+
+        cartItem.setQuantity(request.getQuantity());
+
+        cartItemRepository.save(cartItem);
+        return cartMapper.toCartResponse(cart);
+    }
+
+    @Transactional
+    public Boolean deleteCartItem(Long cartItemId) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new RuntimeException("Cart item not found."));
+
+        Cart cart = cartItem.getCart();
+
+        if (cart != null) {
+            cart.getCartItems().remove(cartItem);
+
+            if (cartItem.isSelected())
+                cart.setTotalPrice(cart.getTotalPrice() - cartItem.getPrice() * cartItem.getQuantity());
+
+            cartRepository.save(cart);
+        }
+        cartItemRepository.delete(cartItem);
+        return !cartItemRepository.existsById(cartItemId);
+    }
+
 }
