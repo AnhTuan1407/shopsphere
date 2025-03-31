@@ -46,6 +46,7 @@ public class OrderService {
     ProductClient productClient;
     OrderProducer orderProducer;
     PaymentClient paymentClient;
+    CartService cartService;
 
     @PreAuthorize("hasRole('USER')")
     public OrderInfoResponse addNewOrderInfo(OrderInfoCreationRequest request) {
@@ -93,12 +94,13 @@ public class OrderService {
             orderItem.setOrder(order);
             orderItemResponses.add(orderItemMapper.toOrderItemResponse(orderItem));
             orderItemRepository.save(orderItem);
+
+            cartService.deleteCartByProductId(rq.getProductVariantId());
         }
 
         order.setTotalPrice(totalPrice);
         var orderResponse = orderMapper.toOrderResponse(orderRepository.save(order));
         orderResponse.setOrderItems(orderItemResponses);
-
 
         var paymentRequest = new PaymentRequest(
                 totalPrice,
@@ -118,7 +120,6 @@ public class OrderService {
                 )
         );
 
-
         return orderResponse;
     }
 
@@ -135,5 +136,9 @@ public class OrderService {
     @PreAuthorize("hasRole('ADMIN')")
     public OrderResponse getOrderById(Long id) {
         return orderMapper.toOrderResponse(orderRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND)));
+    }
+
+    public List<OrderInfoResponse> getAllOrderInfo(String profileId) {
+        return orderRepository.findAllOrderInfoByProfileId(profileId).stream().map(orderMapper::toOrderInfoResponse).toList();
     }
 }

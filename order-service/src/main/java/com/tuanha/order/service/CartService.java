@@ -116,4 +116,21 @@ public class CartService {
         return !cartItemRepository.existsById(cartItemId);
     }
 
+    @Transactional
+    public Boolean deleteCartByProductId(Long productVariantId) {
+        CartItem cartItem = cartItemRepository.findByProductVariantId(productVariantId);
+        Cart cart = cartItem.getCart();
+
+        if (cart != null) {
+            cart.getCartItems().remove(cartItem);
+
+            if (cartItem.isSelected())
+                cart.setTotalPrice(cart.getTotalPrice() - cartItem.getPrice() * cartItem.getQuantity());
+
+            cartRepository.save(cart);
+        }
+        cartItemRepository.delete(cartItem);
+        return !cartItemRepository.existsByProductVariantId(productVariantId);
+    }
+
 }

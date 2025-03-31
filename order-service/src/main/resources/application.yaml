@@ -24,6 +24,6 @@ spring:
 app:
   services:
     product: http://localhost:8082
-    profile: http://localhost:8081/profile/users
+    profile: http://localhost:8081/profile/
     payment: http://localhost:8084/payments
 

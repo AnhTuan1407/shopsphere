@@ -56,4 +56,11 @@ public class OrderController {
                 .result(orderService.getAllOrdersByProfileId(profileId))
                 .build();
     }
+
+    @GetMapping("/address-info/{profileId}")
+    ApiResponse<List<OrderInfoResponse>> getAllOrderInfo(@PathVariable("profileId") String profileId) {
+        return ApiResponse.<List<OrderInfoResponse>>builder()
+                .result(orderService.getAllOrderInfo(profileId))
+                .build();
+    }
 }
