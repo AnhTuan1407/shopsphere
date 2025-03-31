@@ -46,7 +46,7 @@ public class OrderMapperImpl implements OrderMapper {
         OrderResponse.OrderResponseBuilder orderResponse = OrderResponse.builder();
 
         orderResponse.orderItems( orderItemListToOrderItemResponseList( order.getOrderItems() ) );
-        orderResponse.orderInfo( orderInfoToOrderInfoResponse( order.getOrderInfo() ) );
+        orderResponse.orderInfo( toOrderInfoResponse( order.getOrderInfo() ) );
         orderResponse.id( order.getId() );
         orderResponse.profileId( order.getProfileId() );
         orderResponse.orderDate( order.getOrderDate() );
@@ -55,6 +55,27 @@ public class OrderMapperImpl implements OrderMapper {
         orderResponse.paymentMethod( order.getPaymentMethod() );
 
         return orderResponse.build();
+    }
+
+    @Override
+    public OrderInfoResponse toOrderInfoResponse(OrderInfo orderInfo) {
+        if ( orderInfo == null ) {
+            return null;
+        }
+
+        OrderInfoResponse.OrderInfoResponseBuilder orderInfoResponse = OrderInfoResponse.builder();
+
+        orderInfoResponse.id( orderInfo.getId() );
+        orderInfoResponse.profileId( orderInfo.getProfileId() );
+        orderInfoResponse.fullName( orderInfo.getFullName() );
+        orderInfoResponse.phoneNumber( orderInfo.getPhoneNumber() );
+        orderInfoResponse.city( orderInfo.getCity() );
+        orderInfoResponse.district( orderInfo.getDistrict() );
+        orderInfoResponse.ward( orderInfo.getWard() );
+        orderInfoResponse.detailAddress( orderInfo.getDetailAddress() );
+        orderInfoResponse.defaultAddress( orderInfo.isDefaultAddress() );
+
+        return orderInfoResponse.build();
     }
 
     @Override
@@ -95,25 +116,5 @@ public class OrderMapperImpl implements OrderMapper {
         }
 
         return list1;
-    }
-
-    protected OrderInfoResponse orderInfoToOrderInfoResponse(OrderInfo orderInfo) {
-        if ( orderInfo == null ) {
-            return null;
-        }
-
-        OrderInfoResponse.OrderInfoResponseBuilder orderInfoResponse = OrderInfoResponse.builder();
-
-        orderInfoResponse.id( orderInfo.getId() );
-        orderInfoResponse.profileId( orderInfo.getProfileId() );
-        orderInfoResponse.fullName( orderInfo.getFullName() );
-        orderInfoResponse.phoneNumber( orderInfo.getPhoneNumber() );
-        orderInfoResponse.city( orderInfo.getCity() );
-        orderInfoResponse.district( orderInfo.getDistrict() );
-        orderInfoResponse.ward( orderInfo.getWard() );
-        orderInfoResponse.detailAddress( orderInfo.getDetailAddress() );
-        orderInfoResponse.defaultAddress( orderInfo.isDefaultAddress() );
-
-        return orderInfoResponse.build();
     }
 }
