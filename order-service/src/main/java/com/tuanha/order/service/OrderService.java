@@ -22,6 +22,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,13 +124,11 @@ public class OrderService {
         return orderResponse;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public List<OrderResponse> getAllOrders() {
         return orderRepository.findAll().stream().map(orderMapper::toOrderResponse).toList();
     }
 
     public List<OrderResponse> getAllOrdersByProfileId(String profileId) {
-        log.info("Orders: {}", orderRepository.findAllByProfileId(profileId));
         return orderRepository.findAllByProfileId(profileId).stream().map(orderMapper::toOrderResponse).toList();
     }
 

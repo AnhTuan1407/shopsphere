@@ -50,7 +50,7 @@ public class OrderController {
                 .build();
     }
 
-    @GetMapping("/{profileId}")
+    @GetMapping("/profile/{profileId}")
     ApiResponse<List<OrderResponse>> getAllOrdersByProfileId(@PathVariable("profileId") String profileId) {
         return ApiResponse.<List<OrderResponse>>builder()
                 .result(orderService.getAllOrdersByProfileId(profileId))

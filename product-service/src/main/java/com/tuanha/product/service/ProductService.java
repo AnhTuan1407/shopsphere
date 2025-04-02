@@ -114,4 +114,9 @@ public class ProductService {
 
         return productResponses;
     }
+
+    public ProductResponse getProductByVariantId(Long id) {
+        Product productResponse = productRepository.findByProductVariantId(id);
+        return  productMapper.toProductResponse(productResponse);
+    }
 }
