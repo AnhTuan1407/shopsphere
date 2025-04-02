@@ -58,7 +58,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    ApiResponse<List<ProductResponse>> getProductById(@RequestParam("name") String name) {
+    ApiResponse<List<ProductResponse>> searchProductByName(@RequestParam("name") String name) {
         return ApiResponse.<List<ProductResponse>>builder()
                 .result(productService.getAllProductContainingName(name))
                 .build();
@@ -75,6 +75,13 @@ public class ProductController {
     ApiResponse<List<ProductResponse>> getAllProductByCategoryId(@RequestParam("id") Long categoryId) {
         return ApiResponse.<List<ProductResponse>>builder()
                 .result(productService.getAllProductByCategoryId(categoryId))
+                .build();
+    }
+
+    @GetMapping("by-variant/{id}")
+    ApiResponse<ProductResponse> getProductByVariantId(@PathVariable("id") Long productVariantId) {
+        return ApiResponse.<ProductResponse>builder()
+                .result(productService.getProductByVariantId(productVariantId))
                 .build();
     }
 }
