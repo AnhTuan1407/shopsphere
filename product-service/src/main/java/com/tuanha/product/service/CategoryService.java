@@ -30,7 +30,6 @@ public class CategoryService {
 
     ProductService productService;
 
-    @PreAuthorize("hasRole('ADMIN')")
     public CategoryResponse createCategory(CategoryCreationRequest request) {
         if (categoryRepository.existsByName(request.getName())) {
             throw new AppException(ErrorCode.CATEGORY_EXISTS);

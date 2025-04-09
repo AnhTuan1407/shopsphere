@@ -1,11 +1,6 @@
-package com.devteria.identity.dto.request;
-
-import java.time.LocalDate;
+package com.tuanha.product.dto.request;
 
 import jakarta.validation.constraints.Size;
-
-import com.devteria.identity.validator.DobConstraint;
-
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -23,6 +18,5 @@ public class UserCreationRequest {
     String lastName;
     String email;
     String phoneNumber;
-    @Builder.Default
-    boolean isSeller = false;
+    boolean isSeller;
 }

@@ -56,4 +56,11 @@ public class SupplierController {
                 .result(supplierService.getSupplierById(id))
                 .build();
     }
+
+    @GetMapping("/by-user/{userId}")
+    ApiResponse<SupplierResponse> getSupplierByUserId(@PathVariable("userId") String userId) {
+        return ApiResponse.<SupplierResponse>builder()
+                .result(supplierService.getSupplierByUserId(userId))
+                .build();
+    }
 }

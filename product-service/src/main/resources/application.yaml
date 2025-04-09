@@ -26,5 +26,8 @@ jwt:
 firebase:
   bucket-name: gs://shopsphere-62911.appspot.com
 
+app:
+  services:
+    identity: http://localhost:8080/identity
 
 
