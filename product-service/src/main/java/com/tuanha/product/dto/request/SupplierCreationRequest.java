@@ -13,4 +13,5 @@ public class SupplierCreationRequest {
     String address;
     String contactEmail;
     String phoneNumber;
+    String password;
 }

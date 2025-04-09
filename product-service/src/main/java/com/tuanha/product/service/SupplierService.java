@@ -2,12 +2,15 @@ package com.tuanha.product.service;
 
 import com.tuanha.product.dto.request.SupplierCreationRequest;
 import com.tuanha.product.dto.request.SupplierUpdationRequest;
+import com.tuanha.product.dto.request.UserCreationRequest;
 import com.tuanha.product.dto.response.SupplierResponse;
 import com.tuanha.product.entity.Supplier;
 import com.tuanha.product.exception.AppException;
 import com.tuanha.product.exception.ErrorCode;
 import com.tuanha.product.mapper.SupplierMapper;
 import com.tuanha.product.repository.SupplierRepository;
+import com.tuanha.product.repository.httpClient.UserClient;
+import feign.FeignException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,15 +27,27 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SupplierService {
     SupplierRepository supplierRepository;
-
+    UserClient userClient;
     SupplierMapper supplierMapper;
 
-    @PreAuthorize("hasRole('ADMIN')")
     public SupplierResponse createSupplier(SupplierCreationRequest request) {
         if (!ObjectUtils.isEmpty(supplierRepository.findByName(request.getName())))
             throw new AppException(ErrorCode.SUPPLIER_EXISTS);
 
         Supplier supplier = supplierMapper.toSupplier(request);
+
+        var userCreationRequest = new UserCreationRequest(
+                request.getPhoneNumber(),
+                request.getPassword(),
+                "",
+                request.getName(),
+                request.getContactEmail(),
+                request.getPhoneNumber(),
+                true
+        );
+        var apiResponse = userClient.createUser(userCreationRequest);
+
+        supplier.setUserId(apiResponse.getResult().getId());
         return supplierMapper.toSupplierResponse(supplierRepository.save(supplier));
     }
 
@@ -60,5 +75,10 @@ public class SupplierService {
         supplierRepository.deleteById(id);
 
         return "Supplier has been deleted.";
+    }
+
+    public SupplierResponse getSupplierByUserId(String id) {
+        var supplier = supplierRepository.findByUserId(id);
+        return supplierMapper.toSupplierResponse(supplier);
     }
 }

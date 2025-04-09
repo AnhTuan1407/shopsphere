@@ -34,6 +34,8 @@ public class Supplier {
     @Builder.Default
     int rating = 0;
 
+    String userId;
+
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 }

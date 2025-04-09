@@ -21,21 +21,6 @@ public class OrderController {
 
     OrderService orderService;
 
-    @PostMapping("/address-info")
-    ApiResponse<OrderInfoResponse> addNewOrderInfo(@RequestBody OrderInfoCreationRequest request) {
-        return ApiResponse.<OrderInfoResponse>builder()
-                .result(orderService.addNewOrderInfo(request))
-                .build();
-    }
-
-    @PutMapping("/address-info/{id}")
-    ApiResponse<OrderInfoResponse> updateOrderInfo(@RequestBody OrderInfoUpdationRequest request,
-                                                   @PathVariable("id") Long id) {
-        return ApiResponse.<OrderInfoResponse>builder()
-                .result(orderService.updateOrderInfo(request, id))
-                .build();
-    }
-
     @PostMapping("/")
     ApiResponse<OrderResponse> createOrder(@RequestBody OrderCreationRequest request) {
         return ApiResponse.<OrderResponse>builder()
@@ -57,10 +42,46 @@ public class OrderController {
                 .build();
     }
 
+    @PostMapping("/address-info")
+    ApiResponse<OrderInfoResponse> addNewOrderInfo(@RequestBody OrderInfoCreationRequest request) {
+        return ApiResponse.<OrderInfoResponse>builder()
+                .result(orderService.addNewOrderInfo(request))
+                .build();
+    }
+
+    @PutMapping("/address-info/{id}")
+    ApiResponse<OrderInfoResponse> updateOrderInfo(@RequestBody OrderInfoUpdationRequest request,
+                                                   @PathVariable("id") Long id) {
+        return ApiResponse.<OrderInfoResponse>builder()
+                .result(orderService.updateOrderInfo(request, id))
+                .build();
+    }
+
     @GetMapping("/address-info/{profileId}")
     ApiResponse<List<OrderInfoResponse>> getAllOrderInfo(@PathVariable("profileId") String profileId) {
         return ApiResponse.<List<OrderInfoResponse>>builder()
                 .result(orderService.getAllOrderInfo(profileId))
+                .build();
+    }
+
+    @PutMapping("/address-info/set-default/{id}")
+    ApiResponse<OrderInfoResponse> setDefaultAddress(@PathVariable("id") Long id) {
+        return ApiResponse.<OrderInfoResponse>builder()
+                .result(orderService.setDefaultAddress(id))
+                .build();
+    }
+
+    @GetMapping("/address-info/find-id/{id}")
+    ApiResponse<OrderInfoResponse> findOrderInfoById(@PathVariable("id") Long id) {
+        return ApiResponse.<OrderInfoResponse>builder()
+                .result(orderService.findOrderInfoById(id))
+                .build();
+    }
+
+    @DeleteMapping("/address-info/{id}")
+    ApiResponse<Boolean> deleteOrderInfoById(@PathVariable("id") Long id) {
+        return ApiResponse.<Boolean>builder()
+                .result(orderService.deleteOrderInfoById(id))
                 .build();
     }
 }

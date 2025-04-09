@@ -36,7 +36,6 @@ public class ProductService {
 
     ProductMapper productMapper;
 
-    @PreAuthorize("hasRole('ADMIN')")
     public ProductResponse createProduct(ProductCreationRequest request) {
         if (productRepository.existsByName(request.getName()))
             throw new AppException(ErrorCode.PRODUCT_EXISTS);

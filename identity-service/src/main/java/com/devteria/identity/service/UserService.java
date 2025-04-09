@@ -51,10 +51,15 @@ public class UserService {
         User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        HashSet<Role> roles = new HashSet<>();
-        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
-        user.setRoles(roles);
-
+        if (request.isSeller()) {
+            HashSet<Role> roles = new HashSet<>();
+            roleRepository.findById(PredefinedRole.SELLER_ROLE).ifPresent(roles::add);
+            user.setRoles(roles);
+        } else {
+            HashSet<Role> roles = new HashSet<>();
+            roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
+            user.setRoles(roles);
+        }
         user = userRepository.save(user);
 
         var profileCreationRequest = profileMapper.toUserProfileCreationRequest(request);

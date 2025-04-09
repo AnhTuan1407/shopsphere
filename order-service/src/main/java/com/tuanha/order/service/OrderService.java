@@ -52,10 +52,18 @@ public class OrderService {
     @PreAuthorize("hasRole('USER')")
     public OrderInfoResponse addNewOrderInfo(OrderInfoCreationRequest request) {
         OrderInfo orderInfo = orderInfoMapper.toOrderInfo(request);
+        if (orderInfo.isDefaultAddress()) {
+            var orderInfoList = orderInfoRepository.findAll().stream().filter(OrderInfo::isDefaultAddress);
+            orderInfoList.forEach(item -> item.setDefaultAddress(false));
+        }
         return orderInfoMapper.toOrderInfoResponse(orderInfoRepository.save(orderInfo));
     }
 
     public OrderInfoResponse updateOrderInfo(OrderInfoUpdationRequest request, Long id) {
+        if (request.isDefaultAddress()) {
+            var orderInfoDefault = orderInfoRepository.findAll().stream().filter(OrderInfo::isDefaultAddress);
+            orderInfoDefault.forEach(orderInfo -> orderInfo.setDefaultAddress(false));
+        }
         OrderInfo orderInfo = orderInfoRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ORDER_INFO_NOT_FOUND));
         orderInfoMapper.toUpdateOrderInfo(orderInfo, request);
         return orderInfoMapper.toOrderInfoResponse(orderInfoRepository.save(orderInfo));
@@ -140,4 +148,28 @@ public class OrderService {
     public List<OrderInfoResponse> getAllOrderInfo(String profileId) {
         return orderRepository.findAllOrderInfoByProfileId(profileId).stream().map(orderMapper::toOrderInfoResponse).toList();
     }
+
+    public OrderInfoResponse setDefaultAddress(Long id) {
+        var orderInfoDefault = orderInfoRepository.findAll().stream().filter(OrderInfo::isDefaultAddress);
+        orderInfoDefault.forEach(orderInfo -> orderInfo.setDefaultAddress(false));
+        var orderInfo = orderInfoRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ORDER_INFO_NOT_FOUND));
+        orderInfo.setDefaultAddress(true);
+        orderInfoRepository.save(orderInfo);
+        return orderInfoMapper.toOrderInfoResponse(orderInfo);
+    }
+
+    public OrderInfoResponse findOrderInfoById(Long id) {
+        var orderInfo = orderInfoRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ORDER_INFO_NOT_FOUND));
+        return orderInfoMapper.toOrderInfoResponse(orderInfo);
+    }
+
+    public boolean deleteOrderInfoById(Long id) {
+        var orderInfo = orderInfoRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.ORDER_INFO_NOT_FOUND));
+        orderInfo.setProfileId(null);
+        orderInfoRepository.save(orderInfo);
+        orderInfoRepository.delete(orderInfo);
+        return !orderInfoRepository.existsById(id);
+    }
+
 }
