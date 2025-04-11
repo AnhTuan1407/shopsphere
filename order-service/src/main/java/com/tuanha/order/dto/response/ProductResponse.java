@@ -1,6 +1,6 @@
 package com.tuanha.order.dto.response;
 
-import com.tuanha.order.entity.Order;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,10 +9,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderItemResponse {
+public class ProductResponse {
     Long id;
-    Long productVariantId;
-    Long supplierId;
-    int quantity;
-    double pricePerUnit;
+    String description;
+    String imageUrl;
+    String name;
+    SupplierResponse supplier;
 }

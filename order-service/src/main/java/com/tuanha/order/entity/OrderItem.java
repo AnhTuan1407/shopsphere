@@ -17,6 +17,7 @@ public class OrderItem {
     Long id;
 
     Long productVariantId;
+    Long supplierId;
     int quantity;
     double pricePerUnit;
 

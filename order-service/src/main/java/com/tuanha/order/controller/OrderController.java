@@ -3,6 +3,7 @@ package com.tuanha.order.controller;
 import com.tuanha.order.dto.request.OrderCreationRequest;
 import com.tuanha.order.dto.request.OrderInfoCreationRequest;
 import com.tuanha.order.dto.request.OrderInfoUpdationRequest;
+import com.tuanha.order.dto.request.UpdateStatusRequest;
 import com.tuanha.order.dto.response.ApiResponse;
 import com.tuanha.order.dto.response.OrderInfoResponse;
 import com.tuanha.order.dto.response.OrderResponse;
@@ -39,6 +40,14 @@ public class OrderController {
     ApiResponse<List<OrderResponse>> getAllOrdersByProfileId(@PathVariable("profileId") String profileId) {
         return ApiResponse.<List<OrderResponse>>builder()
                 .result(orderService.getAllOrdersByProfileId(profileId))
+                .build();
+    }
+
+    @PutMapping("/status/{id}")
+    ApiResponse<OrderResponse> updateStatusOrder(@PathVariable("id") Long id,
+                                                 @RequestBody UpdateStatusRequest  request) {
+        return ApiResponse.<OrderResponse>builder()
+                .result(orderService.updateStatusOrder(id, request))
                 .build();
     }
 

@@ -22,6 +22,7 @@ public class OrderItemMapperImpl implements OrderItemMapper {
         OrderItem.OrderItemBuilder orderItem = OrderItem.builder();
 
         orderItem.productVariantId( request.getProductVariantId() );
+        orderItem.supplierId( request.getSupplierId() );
         orderItem.quantity( request.getQuantity() );
         orderItem.pricePerUnit( request.getPricePerUnit() );
 
@@ -38,6 +39,7 @@ public class OrderItemMapperImpl implements OrderItemMapper {
 
         orderItemResponse.id( orderItem.getId() );
         orderItemResponse.productVariantId( orderItem.getProductVariantId() );
+        orderItemResponse.supplierId( orderItem.getSupplierId() );
         orderItemResponse.quantity( orderItem.getQuantity() );
         orderItemResponse.pricePerUnit( orderItem.getPricePerUnit() );
 
