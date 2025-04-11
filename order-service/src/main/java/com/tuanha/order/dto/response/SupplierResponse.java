@@ -1,18 +1,22 @@
 package com.tuanha.order.dto.response;
 
-import com.tuanha.order.entity.Order;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDate;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderItemResponse {
+public class SupplierResponse {
     Long id;
-    Long productVariantId;
-    Long supplierId;
-    int quantity;
-    double pricePerUnit;
+    String name;
+    int follower;
+    String address;
+    String contactEmail;
+    String phoneNumber;
+    int rating;
+    LocalDate createdAt;
 }

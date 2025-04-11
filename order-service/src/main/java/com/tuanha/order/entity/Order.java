@@ -26,6 +26,7 @@ public class Order {
     LocalDate orderDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status_order", length = 50)
     StatusOrder statusOrder;
 
     Double totalPrice;

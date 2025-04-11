@@ -99,6 +99,7 @@ public class OrderMapperImpl implements OrderMapper {
 
         orderItemResponse.id( orderItem.getId() );
         orderItemResponse.productVariantId( orderItem.getProductVariantId() );
+        orderItemResponse.supplierId( orderItem.getSupplierId() );
         orderItemResponse.quantity( orderItem.getQuantity() );
         orderItemResponse.pricePerUnit( orderItem.getPricePerUnit() );
 

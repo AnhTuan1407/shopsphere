@@ -27,7 +27,8 @@ public class OrderCreationRequest {
     Double totalPrice = 0.0;
 
     @Enumerated(EnumType.STRING)
-    PaymentMethod paymentMethod;
+    @Builder.Default
+    PaymentMethod paymentMethod = PaymentMethod.VISA;
 
     Long orderInfoId;
     List<ProductPurchaseRequest> products;

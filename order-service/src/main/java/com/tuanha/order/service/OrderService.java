@@ -5,6 +5,7 @@ import com.tuanha.order.dto.response.*;
 import com.tuanha.order.entity.Order;
 import com.tuanha.order.entity.OrderInfo;
 import com.tuanha.order.entity.OrderItem;
+import com.tuanha.order.entity.StatusOrder;
 import com.tuanha.order.exception.AppException;
 import com.tuanha.order.exception.ErrorCode;
 import com.tuanha.order.kafka.OrderConfirmation;
@@ -15,6 +16,7 @@ import com.tuanha.order.mapper.OrderMapper;
 import com.tuanha.order.repository.OrderInfoRepository;
 import com.tuanha.order.repository.OrderItemRepository;
 import com.tuanha.order.repository.OrderRepository;
+import com.tuanha.order.repository.httpClient.IProductClientRepository;
 import com.tuanha.order.repository.httpClient.PaymentClient;
 import com.tuanha.order.repository.httpClient.ProfileClient;
 import com.tuanha.order.service.httpClient.ProductClient;
@@ -48,6 +50,7 @@ public class OrderService {
     OrderProducer orderProducer;
     PaymentClient paymentClient;
     CartService cartService;
+    IProductClientRepository iProductClientRepository;
 
     @PreAuthorize("hasRole('USER')")
     public OrderInfoResponse addNewOrderInfo(OrderInfoCreationRequest request) {
@@ -93,8 +96,10 @@ public class OrderService {
         double totalPrice = 0.0;
         List<OrderItemResponse> orderItemResponses = new ArrayList<>();
         for (ProductPurchaseRequest rq : request.getProducts()) {
+            var productResponse = iProductClientRepository.getProductByVariantId(rq.getProductVariantId());
             OrderItemCreationRequest orderItemRequest = new OrderItemCreationRequest(
                     rq.getProductVariantId(),
+                    productResponse.getResult().getSupplier().getId(),
                     rq.getQuantity(),
                     rq.getPricePerUnit()
             );
@@ -134,6 +139,15 @@ public class OrderService {
 
     public List<OrderResponse> getAllOrders() {
         return orderRepository.findAll().stream().map(orderMapper::toOrderResponse).toList();
+    }
+
+    public OrderResponse updateStatusOrder(Long id, UpdateStatusRequest request) {
+        var order = orderRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_FOUND));
+        StatusOrder newStatus = StatusOrder.fromString(request.getStatus())
+                .orElseThrow(() -> new AppException(ErrorCode.INVALID_STATUS_ORDER));
+        order.setStatusOrder(newStatus);
+        order = orderRepository.save(order);
+        return orderMapper.toOrderResponse(order);
     }
 
     public List<OrderResponse> getAllOrdersByProfileId(String profileId) {

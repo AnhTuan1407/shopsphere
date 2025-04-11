@@ -1,5 +1,6 @@
 package com.tuanha.order.dto.request;
 
+import com.tuanha.order.entity.StatusOrder;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,9 +9,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderItemCreationRequest {
-    Long productVariantId;
-    Long supplierId;
-    int quantity;
-    double pricePerUnit;
+public class UpdateStatusRequest {
+    String status;
 }
