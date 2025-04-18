@@ -29,10 +29,11 @@ public class OrderMapperImpl implements OrderMapper {
         Order.OrderBuilder order = Order.builder();
 
         order.profileId( request.getProfileId() );
-        order.orderDate( request.getOrderDate() );
-        order.statusOrder( request.getStatusOrder() );
         order.totalPrice( request.getTotalPrice() );
         order.paymentMethod( request.getPaymentMethod() );
+        order.shippingFee( request.getShippingFee() );
+        order.voucherId( request.getVoucherId() );
+        order.note( request.getNote() );
 
         return order.build();
     }
@@ -53,6 +54,9 @@ public class OrderMapperImpl implements OrderMapper {
         orderResponse.statusOrder( order.getStatusOrder() );
         orderResponse.totalPrice( order.getTotalPrice() );
         orderResponse.paymentMethod( order.getPaymentMethod() );
+        orderResponse.shippingFee( order.getShippingFee() );
+        orderResponse.voucherId( order.getVoucherId() );
+        orderResponse.note( order.getNote() );
 
         return orderResponse.build();
     }

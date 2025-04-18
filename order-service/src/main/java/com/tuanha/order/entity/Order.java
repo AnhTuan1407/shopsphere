@@ -23,16 +23,22 @@ public class Order {
 
     @Column(name = "profile_id")
     String profileId;
-    LocalDate orderDate;
+    @Builder.Default
+    LocalDate orderDate = LocalDate.now();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status_order", length = 50)
-    StatusOrder statusOrder;
+    @Builder.Default
+    StatusOrder statusOrder = StatusOrder.PENDING;
 
     Double totalPrice;
 
     @Enumerated(EnumType.STRING)
     PaymentMethod paymentMethod;
+
+    int shippingFee;
+    Long voucherId;
+    String note;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
