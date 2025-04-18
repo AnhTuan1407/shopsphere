@@ -16,20 +16,11 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OrderCreationRequest {
     String profileId;
-    @Builder.Default
-    LocalDate orderDate = LocalDate.now();
-
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    StatusOrder statusOrder = StatusOrder.PENDING;
-
-    @Builder.Default
-    Double totalPrice = 0.0;
-
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    PaymentMethod paymentMethod = PaymentMethod.VISA;
-
+    Double totalPrice;
+    PaymentMethod paymentMethod;
+    int shippingFee;
+    Long voucherId;
     Long orderInfoId;
+    String note;
     List<ProductPurchaseRequest> products;
 }

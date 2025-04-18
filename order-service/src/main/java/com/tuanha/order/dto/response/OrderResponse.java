@@ -23,4 +23,7 @@ public class OrderResponse {
     List<OrderItemResponse> orderItems;
     OrderInfoResponse orderInfo;
     PaymentMethod paymentMethod;
+    int shippingFee;
+    Long voucherId;
+    String note;
 }
