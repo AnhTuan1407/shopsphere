@@ -29,6 +29,7 @@ public class VoucherCreationRequest {
     Long creatorId;
     Date startDate;
     Date endDate;
+    int perUserLimit;
     int totalQuantity;
     PaymentMethod applicablePayment;
     List<VoucherApplicableProductRequest> applicableProducts;

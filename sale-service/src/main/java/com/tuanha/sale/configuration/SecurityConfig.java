@@ -23,6 +23,8 @@ public class SecurityConfig {
     private final String[] PUBLIC_ENDPOINTS = {
             "/vouchers",
             "/vouchers/supplier",
+            "/vouchers/supplier/{id}",
+            "/vouchers/types",
     };
 
     public SecurityConfig(CustomJwtDecoder customJwtDecoder) {

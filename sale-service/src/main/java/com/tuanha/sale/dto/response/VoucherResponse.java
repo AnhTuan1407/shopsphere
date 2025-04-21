@@ -34,6 +34,7 @@ public class VoucherResponse {
     Date startDate;
     Date endDate;
     int totalQuantity;
+    int perUserLimit;
     PaymentMethod applicablePayment;
     List<VoucherApplicableProductResponse> applicableProducts;
     List<VoucherApplicableCategoryResponse> applicableCategories;

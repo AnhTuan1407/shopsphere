@@ -6,6 +6,7 @@ import com.tuanha.sale.dto.request.VoucherUpdationRequest;
 import com.tuanha.sale.dto.response.ApiResponse;
 import com.tuanha.sale.dto.response.UserVoucherResponse;
 import com.tuanha.sale.dto.response.VoucherResponse;
+import com.tuanha.sale.enums.VoucherType;
 import com.tuanha.sale.service.VoucherService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -87,5 +88,19 @@ public class VoucherController {
     ApiResponse<Void> deleteVoucher(@PathVariable Long id) {
         voucherService.deleteVoucher(id);
         return ApiResponse.<Void>builder().build();
+    }
+
+    @GetMapping("/supplier/{id}")
+    ApiResponse<List<VoucherResponse>> getAllVouchersBySupplierId(@PathVariable("id") Long id) {
+        return ApiResponse.<List<VoucherResponse>>builder()
+                .result(voucherService.getAllVouchersBySupplierId(id))
+                .build();
+    }
+
+    @GetMapping("/types")
+    ApiResponse<List<VoucherType>> getAllVoucherTypes() {
+        return ApiResponse.<List<VoucherType>>builder()
+                .result(List.of(VoucherType.values()))
+                .build();
     }
 }
