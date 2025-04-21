@@ -141,6 +141,11 @@ public class VoucherService {
                 .toList();
     }
 
-
-
+    public List<VoucherResponse> getAllVouchersBySupplierId(Long id) {
+        return voucherRepository.findAllByCreatorId(id)
+                .stream()
+                .map(voucherMapper::toVoucherResponse)
+                .filter(v -> v.getCreatorType() == CreatorType.SUPPLIER)
+                .toList();
+    }
 }

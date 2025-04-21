@@ -12,7 +12,7 @@ public enum ErrorCode {
     PROFILE_NOT_FOUND(1010, "Profile not found", HttpStatus.NOT_FOUND),
     SUPPLIER_NOT_FOUND(1011, "Supplier not found", HttpStatus.NOT_FOUND),
     VOUCHER_NOT_FOUND(1011, "Voucher not found", HttpStatus.NOT_FOUND),
-    VOUCHER_ALREADY_CLAIMED(1011, "You already claimed this voucher", HttpStatus.BAD_REQUEST),
+    VOUCHER_ALREADY_CLAIMED(1011, "Voucher has already been claimed by this user", HttpStatus.BAD_REQUEST),
     ;
 
     private int code;
