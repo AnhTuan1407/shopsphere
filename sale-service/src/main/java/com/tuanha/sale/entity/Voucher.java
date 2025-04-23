@@ -42,7 +42,8 @@ public class Voucher {
     Date endDate;
 
     int totalQuantity;
-    int perUserLimit;
+    @Builder.Default
+    int perUserLimit = 1;
     @Builder.Default
     int usedQuantity = 0;
 

@@ -14,7 +14,7 @@ public class UserVoucherResponse {
     Long id;
     VoucherResponse voucher;
     String profileId;
-    SupplierResponse supplier;
-    boolean isUse;
+    Long supplierId;
+    boolean used;
     Date claimedAt;
 }

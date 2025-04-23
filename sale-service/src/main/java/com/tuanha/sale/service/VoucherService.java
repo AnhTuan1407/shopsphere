@@ -3,6 +3,7 @@ package com.tuanha.sale.service;
 import com.tuanha.sale.dto.request.*;
 import com.tuanha.sale.dto.response.UserVoucherResponse;
 import com.tuanha.sale.dto.response.VoucherResponse;
+import com.tuanha.sale.entity.UserVoucher;
 import com.tuanha.sale.entity.VoucherApplicableCategory;
 import com.tuanha.sale.entity.VoucherApplicableProduct;
 import com.tuanha.sale.enums.CreatorType;
@@ -23,8 +24,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -66,23 +70,39 @@ public class VoucherService {
         return voucherResponse;
     }
 
-    public UserVoucherResponse claimVoucher(UserVoucherCreationRequest request) {
-        var userVoucher = userVoucherMapper.toUserVoucher(request);
-        var voucher = voucherRepository.findById(request.getVoucherId()).orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_FOUND));
+    @Transactional
+    public List<UserVoucherResponse> claimVoucher(UserVoucherCreationRequest request) {
+        var voucher = voucherRepository.findById(request.getVoucherId())
+                .orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_FOUND));
 
-        boolean alreadyClaimed = userVoucherRepository.existsByProfileIdAndVoucherId(
-                request.getProfileId(),
-                request.getVoucherId()
-        );
-        if (alreadyClaimed) {
-            throw new AppException(ErrorCode.VOUCHER_ALREADY_CLAIMED);
+        // Kiểm tra số lượng đã claim
+        int claimedCount = userVoucherRepository.countByProfileIdAndVoucherId(
+                request.getProfileId(), request.getVoucherId());
+        // Nếu vượt quá perUserLimit thì từ chối
+        if (claimedCount >= voucher.getPerUserLimit()) {
+            throw new AppException(ErrorCode.VOUCHER_CLAIM_LIMIT_REACHED);
         }
+        int claimable = voucher.getPerUserLimit() - claimedCount;
+        if (voucher.getTotalQuantity() < claimable) {
+            throw new AppException(ErrorCode.VOUCHER_OUT_OF_STOCK);
+        }
+        List<UserVoucher> newUserVouchers = new ArrayList<>();
+        for (int i = 0; i < claimable; i++) {
+            newUserVouchers.add(UserVoucher.builder()
+                    .profileId(request.getProfileId())
+                    .supplierId(request.getSupplierId())
+                    .voucher(voucher)
+                    .claimedAt(LocalDate.now())
+                    .used(false)
+                    .build());
+        }
+        List<UserVoucher> savedVouchers = userVoucherRepository.saveAll(newUserVouchers);
 
-        userVoucher.setVoucher(voucher);
-        var userVoucherResponse = userVoucherRepository.save(userVoucher);
-        voucher.setTotalQuantity(voucher.getTotalQuantity() - 1);
+        voucher.setTotalQuantity(voucher.getTotalQuantity() - claimable);
         voucherRepository.save(voucher);
-        return userVoucherMapper.toUserVoucherResponse(userVoucherResponse);
+
+        return savedVouchers.stream()
+                .map(userVoucherMapper::toUserVoucherResponse).toList();
     }
 
     public List<VoucherResponse> getAllVouchers() {
@@ -147,5 +167,12 @@ public class VoucherService {
                 .map(voucherMapper::toVoucherResponse)
                 .filter(v -> v.getCreatorType() == CreatorType.SUPPLIER)
                 .toList();
+    }
+
+    public UserVoucherResponse useVoucher(Long id) {
+        UserVoucher userVoucher = userVoucherRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.VOUCHER_NOT_FOUND));
+        userVoucher.setUsed(true);
+        return userVoucherMapper.toUserVoucherResponse(userVoucherRepository.save(userVoucher));
     }
 }
