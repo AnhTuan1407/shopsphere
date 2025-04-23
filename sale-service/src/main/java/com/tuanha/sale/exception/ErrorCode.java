@@ -13,6 +13,8 @@ public enum ErrorCode {
     SUPPLIER_NOT_FOUND(1011, "Supplier not found", HttpStatus.NOT_FOUND),
     VOUCHER_NOT_FOUND(1011, "Voucher not found", HttpStatus.NOT_FOUND),
     VOUCHER_ALREADY_CLAIMED(1011, "Voucher has already been claimed by this user", HttpStatus.BAD_REQUEST),
+    VOUCHER_CLAIM_LIMIT_REACHED(1012, "User has reached the maximum number of claims for this voucher", HttpStatus.BAD_REQUEST),
+    VOUCHER_OUT_OF_STOCK(1013, "Voucher is out of stock", HttpStatus.BAD_REQUEST),
     ;
 
     private int code;

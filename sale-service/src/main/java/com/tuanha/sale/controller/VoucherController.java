@@ -33,8 +33,8 @@ public class VoucherController {
     }
 
     @PostMapping("/claim")
-    ApiResponse<UserVoucherResponse> claimVoucher(@RequestBody UserVoucherCreationRequest request) {
-        return ApiResponse.<UserVoucherResponse>builder()
+    ApiResponse<List<UserVoucherResponse>> claimVoucher(@RequestBody UserVoucherCreationRequest request) {
+        return ApiResponse.<List<UserVoucherResponse>>builder()
                 .result(voucherService.claimVoucher(request))
                 .build();
     }
@@ -101,6 +101,13 @@ public class VoucherController {
     ApiResponse<List<VoucherType>> getAllVoucherTypes() {
         return ApiResponse.<List<VoucherType>>builder()
                 .result(List.of(VoucherType.values()))
+                .build();
+    }
+
+    @PutMapping("/use/{id}")
+    ApiResponse<UserVoucherResponse> useVoucher(@PathVariable("id") Long id) {
+        return ApiResponse.<UserVoucherResponse>builder()
+                .result(voucherService.useVoucher(id))
                 .build();
     }
 }

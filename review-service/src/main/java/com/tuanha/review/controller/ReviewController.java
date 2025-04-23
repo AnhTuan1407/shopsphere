@@ -29,7 +29,7 @@ public class ReviewController {
                 .build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/by-product/{id}")
     ApiResponse<List<ReviewResponse>> getAllReviewsByProductId(@PathVariable("id") Long id) {
         return ApiResponse.<List<ReviewResponse>>builder()
                 .result(reviewService.getReviewByProductId(id))

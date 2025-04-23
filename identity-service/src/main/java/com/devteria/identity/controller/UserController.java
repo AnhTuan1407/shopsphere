@@ -39,10 +39,10 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/{userId}")
-    ApiResponse<UserResponse> getUser(@PathVariable("userId") String userId) {
+    @GetMapping("/{id}")
+    ApiResponse<UserResponse> getUser(@PathVariable("id") String id) {
         return ApiResponse.<UserResponse>builder()
-                .result(userService.getUser(userId))
+                .result(userService.getUser(id))
                 .build();
     }
 

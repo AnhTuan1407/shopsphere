@@ -93,7 +93,6 @@ public class OrderService {
         order.setOrderInfo(orderInfo);
         orderRepository.save(order);
 
-        double totalPrice = 0.0;
         List<OrderItemResponse> orderItemResponses = new ArrayList<>();
         for (ProductPurchaseRequest rq : request.getProducts()) {
             var productResponse = iProductClientRepository.getProductByVariantId(rq.getProductVariantId());
@@ -104,7 +103,6 @@ public class OrderService {
                     rq.getPricePerUnit()
             );
             OrderItem orderItem = orderItemMapper.toOrderItem(orderItemRequest);
-            totalPrice += rq.getPricePerUnit() * rq.getQuantity();
             orderItem.setOrder(order);
             orderItemResponses.add(orderItemMapper.toOrderItemResponse(orderItem));
             orderItemRepository.save(orderItem);
@@ -112,12 +110,12 @@ public class OrderService {
             cartService.deleteCartByProductId(rq.getProductVariantId());
         }
 
-        order.setTotalPrice(totalPrice);
+        order.setTotalPrice(request.getTotalPrice());
         var orderResponse = orderMapper.toOrderResponse(orderRepository.save(order));
         orderResponse.setOrderItems(orderItemResponses);
 
         var paymentRequest = new PaymentRequest(
-                totalPrice,
+                order.getTotalPrice(),
                 request.getPaymentMethod(),
                 order.getId(),
                 profile
@@ -126,7 +124,7 @@ public class OrderService {
 
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
-                        totalPrice,
+                        order.getTotalPrice(),
                         request.getPaymentMethod(),
                         profile,
                         purchasedProducts,

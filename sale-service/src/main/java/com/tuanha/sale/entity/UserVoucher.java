@@ -25,7 +25,7 @@ public class UserVoucher {
     Long supplierId;
 
     @Builder.Default
-    boolean isUse = false;
+    boolean used = false;
 
     @Builder.Default
     LocalDate claimedAt = LocalDate.now();
