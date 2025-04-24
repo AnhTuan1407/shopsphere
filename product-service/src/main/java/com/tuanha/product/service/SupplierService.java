@@ -3,7 +3,9 @@ package com.tuanha.product.service;
 import com.tuanha.product.dto.request.SupplierCreationRequest;
 import com.tuanha.product.dto.request.SupplierUpdationRequest;
 import com.tuanha.product.dto.request.UserCreationRequest;
+import com.tuanha.product.dto.response.ProductResponse;
 import com.tuanha.product.dto.response.SupplierResponse;
+import com.tuanha.product.entity.Product;
 import com.tuanha.product.entity.Supplier;
 import com.tuanha.product.exception.AppException;
 import com.tuanha.product.exception.ErrorCode;
@@ -80,5 +82,26 @@ public class SupplierService {
     public SupplierResponse getSupplierByUserId(String id) {
         var supplier = supplierRepository.findByUserId(id);
         return supplierMapper.toSupplierResponse(supplier);
+    }
+
+    public List<SupplierResponse> getAllSupplierContainingName(String name) {
+        String[] keywords = name.trim().toLowerCase().split("\\s+");
+
+        List<Supplier> allSuppliers = supplierRepository.findAll();
+
+        List<SupplierResponse> supplierResponses = allSuppliers.stream()
+                .filter(supplier -> {
+                    String supplierNameLower = supplier.getName().toLowerCase();
+                    for (String keyword : keywords) {
+                        if (supplierNameLower.contains(keyword)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                })
+                .map(supplierMapper::toSupplierResponse)
+                .toList();
+
+        return supplierResponses;
     }
 }

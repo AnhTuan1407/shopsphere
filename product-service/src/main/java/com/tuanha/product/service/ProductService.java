@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -90,8 +91,20 @@ public class ProductService {
     }
 
     public List<ProductResponse> getAllProductContainingName(String name) {
+        String[] keywords = name.trim().toLowerCase().split("\\s+");
 
-        List<ProductResponse> productResponses = productRepository.findByNameContainingIgnoreCase(name).stream()
+        List<Product> allProducts = productRepository.findAll();
+
+        List<ProductResponse> productResponses = allProducts.stream()
+                .filter(product -> {
+                    String productNameLower = product.getName().toLowerCase();
+                    for (String keyword : keywords) {
+                        if (productNameLower.contains(keyword)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                })
                 .map(productMapper::toProductResponse)
                 .toList();
 
@@ -116,6 +129,10 @@ public class ProductService {
 
     public ProductResponse getProductByVariantId(Long id) {
         Product productResponse = productRepository.findByProductVariantId(id);
-        return  productMapper.toProductResponse(productResponse);
+        return productMapper.toProductResponse(productResponse);
+    }
+
+    public Integer countProductBySupplierId(Long id) {
+        return productRepository.countProductBySupplierId(id);
     }
 }

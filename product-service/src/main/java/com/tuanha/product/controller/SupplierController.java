@@ -3,6 +3,7 @@ package com.tuanha.product.controller;
 import com.tuanha.product.dto.request.SupplierCreationRequest;
 import com.tuanha.product.dto.request.SupplierUpdationRequest;
 import com.tuanha.product.dto.response.ApiResponse;
+import com.tuanha.product.dto.response.ProductResponse;
 import com.tuanha.product.dto.response.SupplierResponse;
 import com.tuanha.product.service.SupplierService;
 import lombok.AccessLevel;
@@ -61,6 +62,13 @@ public class SupplierController {
     ApiResponse<SupplierResponse> getSupplierByUserId(@PathVariable("userId") String userId) {
         return ApiResponse.<SupplierResponse>builder()
                 .result(supplierService.getSupplierByUserId(userId))
+                .build();
+    }
+
+    @GetMapping("/search")
+    ApiResponse<List<SupplierResponse>> searchSupplierByName(@RequestParam("name") String name) {
+        return ApiResponse.<List<SupplierResponse>>builder()
+                .result(supplierService.getAllSupplierContainingName(name))
                 .build();
     }
 }

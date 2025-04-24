@@ -21,4 +21,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p JOIN p.productVariants pv WHERE pv.id = :variantId")
     Product findByProductVariantId(@Param("variantId") Long variantId);
+
+    @Query("SELECT p FROM Product p WHERE " +
+            "LOWER(p.name) LIKE %:kw1% AND LOWER(p.name) LIKE %:kw2%")
+    List<Product> findByKeywords(@Param("kw1") String kw1, @Param("kw2") String kw2);
+
+    Integer countProductBySupplierId(Long id);
 }
