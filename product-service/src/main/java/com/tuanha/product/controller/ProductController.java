@@ -84,4 +84,11 @@ public class ProductController {
                 .result(productService.getProductByVariantId(productVariantId))
                 .build();
     }
+
+    @GetMapping("/count-product/{id}")
+    ApiResponse<Integer> countProductBySupplierId(@PathVariable("id") Long id) {
+        return ApiResponse.<Integer>builder()
+                .result(productService.countProductBySupplierId(id))
+                .build();
+    }
 }
