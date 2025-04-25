@@ -54,6 +54,8 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
             "/reviews/.*",
             "/sales/vouchers/.*",
             "/sales/vouchers",
+            "/sales/flash-sale/.*",
+            "/sales/flash-sale",
     };
 
     @Value("${app.api-prefix}")

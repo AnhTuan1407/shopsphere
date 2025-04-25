@@ -124,4 +124,12 @@ public class ReviewService {
         }
         return false;
     }
+
+    public Integer countReviewByProductId(Long id) {
+        return reviewRepository.countByProductId(id);
+    }
+
+    public Double averageRatingByProductId(Long id) {
+        return reviewRepository.findAverageRatingByProductId(id);
+    }
 }

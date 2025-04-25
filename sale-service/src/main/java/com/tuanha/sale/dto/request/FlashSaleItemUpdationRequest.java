@@ -1,5 +1,6 @@
 package com.tuanha.sale.dto.request;
 
+import com.tuanha.sale.enums.DiscountType;
 import com.tuanha.sale.enums.FlashSaleItemStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,10 +16,9 @@ public class FlashSaleItemUpdationRequest {
     Long productId;
     BigDecimal originalPrice;
     BigDecimal flashSalePrice;
-    int discountPercentage;
-    BigDecimal discountAmount;
+    DiscountType discountType;
+    BigDecimal discountValue;
     int totalQuantity;
-    int soldQuantity;
     int maxPerUser;
     FlashSaleItemStatus status;
 }

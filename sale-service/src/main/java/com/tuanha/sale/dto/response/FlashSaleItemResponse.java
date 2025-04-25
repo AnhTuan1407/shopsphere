@@ -1,5 +1,6 @@
 package com.tuanha.sale.dto.response;
 
+import com.tuanha.sale.enums.DiscountType;
 import com.tuanha.sale.enums.FlashSaleItemStatus;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -15,11 +16,15 @@ import java.math.BigDecimal;
 public class FlashSaleItemResponse {
     Long id;
     Long productId;
+    Long productVariantId;
+    String imageUrl;
+    String productName;
+    String variantType;
     Long flashSaleId;
     BigDecimal originalPrice;
     BigDecimal flashSalePrice;
-    int discountPercentage;
-    BigDecimal discountAmount;
+    DiscountType discountType;
+    BigDecimal discountValue;
     int totalQuantity;
     int soldQuantity;
     int maxPerUser;

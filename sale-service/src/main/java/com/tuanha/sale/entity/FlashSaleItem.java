@@ -1,5 +1,6 @@
 package com.tuanha.sale.entity;
 
+import com.tuanha.sale.enums.DiscountType;
 import com.tuanha.sale.enums.FlashSaleItemStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +24,10 @@ public class FlashSaleItem {
     FlashSale flashSale;
 
     Long productId;
+    Long productVariantId;
+    String productName;
+    String variantType;
+    String imageUrl;
 
     @Column(name = "original_price")
     BigDecimal originalPrice;
@@ -30,17 +35,19 @@ public class FlashSaleItem {
     @Column(name = "flash_sale_price")
     BigDecimal flashSalePrice;
 
-    @Column(name = "discount_percentage")
-    int discountPercentage;
+    @Column(name = "discount_type")
+    @Enumerated(EnumType.STRING)
+    DiscountType discountType;
 
-    @Column(name = "discount_amount")
-    BigDecimal discountAmount;
+    @Column(name = "discount_value")
+    BigDecimal discountValue;
 
     @Column(name = "total_quantity")
     int totalQuantity;
 
     @Column(name = "sold_quantity")
-    int soldQuantity;
+    @Builder.Default
+    int soldQuantity = 0;
 
     @Column(name = "max_per_user")
     int maxPerUser;

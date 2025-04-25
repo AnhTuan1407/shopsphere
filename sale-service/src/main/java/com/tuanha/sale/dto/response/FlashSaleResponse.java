@@ -16,6 +16,7 @@ import java.util.List;
 public class FlashSaleResponse {
     Long id;
     String name;
+    Long supplierId;
     String description;
     LocalDateTime startTime;
     LocalDateTime endTime;

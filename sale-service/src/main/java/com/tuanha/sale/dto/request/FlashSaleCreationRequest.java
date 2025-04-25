@@ -15,11 +15,9 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FlashSaleCreationRequest {
     String name;
+    Long supplierId;
     String description;
     LocalDateTime startTime;
     LocalDateTime endTime;
-    FlashSaleStatus status;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
     List<FlashSaleItemCreationRequest> flashSaleItems;
 }

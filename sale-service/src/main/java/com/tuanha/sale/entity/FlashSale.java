@@ -18,7 +18,7 @@ public class FlashSale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
+    Long supplierId;
     String name;
     String description;
 
