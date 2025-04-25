@@ -1,6 +1,7 @@
 package com.tuanha.sale.dto.request;
 
 import com.tuanha.sale.entity.FlashSale;
+import com.tuanha.sale.enums.DiscountType;
 import com.tuanha.sale.enums.FlashSaleItemStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,12 +16,11 @@ import java.math.BigDecimal;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FlashSaleItemCreationRequest {
     Long productId;
-    BigDecimal originalPrice;
-    BigDecimal flashSalePrice;
-    int discountPercentage;
-    BigDecimal discountAmount;
+    DiscountType discountType;
+    BigDecimal discountValue;
     int totalQuantity;
-    int soldQuantity;
     int maxPerUser;
-    FlashSaleItemStatus status;
+    String productName;
+    String variantType;
+    String imageUrl;
 }

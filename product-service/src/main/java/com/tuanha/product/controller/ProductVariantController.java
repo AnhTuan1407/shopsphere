@@ -65,4 +65,11 @@ public class ProductVariantController {
                 .result(productVariantService.purchaseProducts(request))
                 .build();
     }
+
+    @GetMapping("/by-product/{id}")
+    ApiResponse<List<ProductVariantResponse>> getVariantsByProductId(@PathVariable("id") Long id) {
+        return ApiResponse.<List<ProductVariantResponse>>builder()
+                .result(productVariantService.findProductVariantByProductId(id))
+                .build();
+    }
 }

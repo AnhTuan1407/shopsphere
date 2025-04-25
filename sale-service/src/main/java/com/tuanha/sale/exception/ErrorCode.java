@@ -19,6 +19,16 @@ public enum ErrorCode {
     FLASH_SALE_ITEM_NOT_FOUND(1017, "Flash sale item not found", HttpStatus.NOT_FOUND),
     FLASH_SALE_NOT_ACTIVE(1018, "Flash sale is not active", HttpStatus.BAD_REQUEST),
     FLASH_SALE_ITEM_NOT_ENOUGH(1018, "Not enough stock available", HttpStatus.BAD_REQUEST),
+    //    Flash sale
+    FLASH_SALE_INVALID_TIME(1001, "Thời gian bắt đầu phải trước thời gian kết thúc", HttpStatus.BAD_REQUEST),
+    FLASH_SALE_ITEM_INVALID_QUANTITY(1002, "Số lượng hoặc giới hạn mỗi người dùng không hợp lệ", HttpStatus.BAD_REQUEST),
+    FLASH_SALE_ITEM_LIMIT_EXCEED(1003, "Giới hạn mỗi người dùng vượt quá tổng số lượng", HttpStatus.BAD_REQUEST),
+    FLASH_SALE_INVALID_DISCOUNT_TYPE(1004, "Loại giảm giá không hợp lệ", HttpStatus.BAD_REQUEST),
+    FLASH_SALE_INVALID_DISCOUNT_PERCENTAGE(1005, "Giá trị phần trăm giảm phải từ 0 đến 100", HttpStatus.BAD_REQUEST),
+    FLASH_SALE_INVALID_DISCOUNT_AMOUNT(1006, "Số tiền giảm không hợp lệ", HttpStatus.BAD_REQUEST),
+    FLASH_SALE_PRICE_MISMATCH(1007, "Giá Flash Sale không khớp với thông tin giảm giá", HttpStatus.BAD_REQUEST),
+    FLASH_SALE_ITEM_QUANTITY_EXCEEDS_AVAILABLE(1008, "Số lượng flash sale vượt quá tồn kho của sản phẩm.", HttpStatus.BAD_REQUEST),
+    FLASH_SALE_INVALID_RESULT_PRICE(1009, "Giá sau khi giảm không hợp lệ (phải lớn hơn 0).", HttpStatus.BAD_REQUEST),
     ;
 
     private int code;

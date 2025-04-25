@@ -10,4 +10,7 @@ import java.util.List;
 
 @Repository
 public interface FlashSaleRepository extends JpaRepository<FlashSale, Long> {
+    List<FlashSale> findByStartTimeAfter(LocalDateTime now);
+    List<FlashSale> findByStartTimeBeforeAndEndTimeAfter(LocalDateTime start, LocalDateTime end);
+    List<FlashSale> findAllBySupplierId(Long id);
 }

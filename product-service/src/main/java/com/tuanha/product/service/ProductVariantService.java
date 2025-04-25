@@ -127,4 +127,9 @@ public class ProductVariantService {
 
         return purchasedProducts;
     }
+
+    public List<ProductVariantResponse> findProductVariantByProductId(Long id) {
+        return productVariantRepository.findAllByProductId(id).stream()
+                .map(productVariantMapper::toProductVariantResponse).toList();
+    }
 }

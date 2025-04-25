@@ -63,4 +63,18 @@ public class ReviewController {
                 .result(reviewService.isLike(reviewId, profileId))
                 .build();
     }
+
+    @GetMapping("/count/by-product/{id}")
+    ApiResponse<Integer> countReviewByProductId(@PathVariable("id") Long id) {
+        return ApiResponse.<Integer>builder()
+                .result(reviewService.countReviewByProductId(id))
+                .build();
+    }
+
+    @GetMapping("/average/by-product/{id}")
+    ApiResponse<Double> averageRatingByProductId(@PathVariable("id") Long id) {
+        return ApiResponse.<Double>builder()
+                .result(reviewService.averageRatingByProductId(id))
+                .build();
+    }
 }

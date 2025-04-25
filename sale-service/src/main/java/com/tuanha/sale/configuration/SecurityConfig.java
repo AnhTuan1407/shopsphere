@@ -25,6 +25,11 @@ public class SecurityConfig {
             "/vouchers/supplier",
             "/vouchers/supplier/{id}",
             "/vouchers/types",
+            "/flash-sale/{id}",
+            "/flash-sale/active",
+            "/flash-sale/upcoming",
+            "/flash-sale",
+            "/flash-sale/supplier/{id}",
     };
 
     public SecurityConfig(CustomJwtDecoder customJwtDecoder) {
