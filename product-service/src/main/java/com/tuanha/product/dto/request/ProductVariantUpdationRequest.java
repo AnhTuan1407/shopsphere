@@ -12,6 +12,7 @@ public class ProductVariantUpdationRequest {
     String color;
     String size;
     String imageUrl;
+    String version;
     double price;
     int availableQuantity;
     int rating;
