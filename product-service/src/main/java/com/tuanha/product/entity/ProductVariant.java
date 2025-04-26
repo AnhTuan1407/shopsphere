@@ -20,6 +20,7 @@ public class ProductVariant {
 
     String color;
     String size;
+    String version;
     String imageUrl;
     double price;
     int availableQuantity;

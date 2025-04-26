@@ -15,6 +15,7 @@ public class ProductVariantCreationRequest {
     String color;
     String size;
     String imageUrl;
+    String version;
     double price;
     int availableQuantity;
     int rating;

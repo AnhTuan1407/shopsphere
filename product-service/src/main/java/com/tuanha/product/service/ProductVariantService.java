@@ -37,7 +37,6 @@ public class ProductVariantService {
 
     ProductVariantMapper productVariantMapper;
 
-    @PreAuthorize("hasRole('ADMIN')")
     public ProductVariantResponse createProductVariant(ProductVariantCreationRequest request) {
 
         ProductVariant productVariant = productVariantMapper.toProductVariant(request);

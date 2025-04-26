@@ -14,6 +14,7 @@ public class ProductVariantResponse {
     Long id;
     String color;
     String size;
+    String version;
     String imageUrl;
     double price;
     int availableQuantity;
